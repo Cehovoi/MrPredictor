@@ -12,6 +12,8 @@ name_length = 4
 ranger = 50
 latter = lambda: choice(low)
 
+print('hello')
+
 def fill():
     for _ in range(ranger):
         s = choice(up)
