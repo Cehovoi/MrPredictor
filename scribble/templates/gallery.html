@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block title %}
+Genitals
+{% endblock %}
+{% block body %}
+<center><a href='/answer/{{bigest}}' class='btn btn-success'>Bigest</a>  
+	<a href='/answer/{{smollest}}' class='btn btn-success'>Smallest</a>
+</center>
+{% set count = namespace(point=count) %}
+	{% for prediction in predictions %}
+		{% if count.point %2 != 0 %}
+			<div style="background-color: transparent; float: right; width: 530px;"> 
+				{%for pict in prediction.img[:-1].split(',')%}
+					<h5 style="color:#CA9F56;"><p style="margin-bottom:-15px;"><samp>{{pict[2:-1]}}</samp></p></h5>
+				{%endfor%}
+				<h1 style="color:#D1462C;">{{prediction.name}}</h1>
+				<p style="margin-bottom: 20px;"></p>
+				{% set count.point = count.point -1 %}
+
+				
+			</div>
+		{% else %}
+			<div style="background-color: transparent; float: left; width: 1000px;">
+				{%for pict in prediction.img[:-1].split(',')%}
+					<h5 style="color:#D1462C;"><p style="margin-bottom:-15px;"><samp>{{pict[2:-1]}}</samp></p></h5>
+
+				{% endfor %}
+				<h1 style="color:#C8A652;" >{{prediction.name}} </h1>
+				<p style="margin-bottom: 20px;"></p>
+				{% set count.point = count.point -1 %}
+			</div>
+
+
+
+		{% endif %}
+	{% endfor %}
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block title %}
+LogIn
+{% endblock %}
+{% block body %}
+<div class='container mt-3'>
+	<h1 style="color:DarkOrange;"> Authentification</h1>
+	<form method = 'post' >
+		<input type='text' name='username' id='title' class='form-control' placeholder = 'Username'><br>
+		<input type='text' name='password' id='title' class='form-control' placeholder = 'Password'><br>
+		<input type='submit' class='btn btn-success' value='Send'>
+	</form>
+</div>
+{% endblock %}

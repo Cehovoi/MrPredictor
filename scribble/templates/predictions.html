@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}
+Base
+{% endblock %}
+{% block body %}
+<div class='container mt-5'>
+	<h1 style="color:DarkOrange;"> All predictions </h1>
+
+	{% if predictions|length > 0 %}
+		{% for i in predictions %}
+			<div class='alert alert-info'>
+				<h2>{{i.name}}</h2>
+				<p>{{i.predictions}}</p>
+				<p><b>{{ i.date.date() }}</b></p>
+				{%for i in i.img[:-1].split(',')%}
+					<p style="margin-bottom:-15px;"><center><samp>{{i[2:-1]}}</samp></center></p>
+				{%endfor%}
+			</div>
+		{% endfor %}
+	{% else %}
+		<p> <h5 style="color:DarkOrange;"> No predictions yet </h5> </p>
+	{% endif %}
+</div>
+{% endblock %}
+

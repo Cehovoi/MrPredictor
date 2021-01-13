@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="eng">
+<head>
+  <meta charset="utf-8">
+  <meta name="Zhenya_Vo" content="SitePoint">
+  <title>{% block title %}{% endblock %}</title>
+  <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css'>
+</head>
+
+<body background = "http://112.r.photoshare.ru/01126/00abead7d76e03d948327c2568181c90d05f6a74.jpg"  align="center" width="250" height="150">
+	<center><h1 style="color:DarkOrange;">Mr. Fortune Teller</h1></center>	
+	
+
+	<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+		<h5 class="my-0 mr-md-auto font-weight-normal">Total predictions - {{count}}</h5>
+	  <nav class="my-2 my-md-0 mr-md-3">
+		<a class="p-2 text-dark" href="/">Start</a>
+		<a class="p-2 text-dark" href="/predictions">All Predictions</a>
+		<a class="p-2 text-dark" href="/gallery">Gallery</a> 
+		{% if admin ==None %}
+			<a class="p-2 text-dark" href="/login">Login</a>
+		{% else %}
+			<a class="p-2 text-dark" href="/admin">{{admin}}</a>
+		{% endif %}
+	</div>
+
+	{% block body %}{% endblock %}
+</body>
+</html>
