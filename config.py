@@ -18,7 +18,7 @@ class TestingConfig(BaseConfig):
     TESTING = True
     WTF_CSRF_ENABLED = False
     SQLALCHEMY_DATABASE_URI = os.environ.get('TESTING_DATABASE_URI') or \
-	'sqlite:///exhibits_box_test.db'
+	'sqlite:///exhibits_box_test1.db'
 
 
 class ProductionConfig(BaseConfig):

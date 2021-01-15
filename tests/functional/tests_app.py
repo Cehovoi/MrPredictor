@@ -18,6 +18,10 @@ def test_client():
  
     ctx.pop()
 
+@pytest.fixture(scope='module')
+def init_db():
+    pass
+
 
 @pytest.mark.parametrize('route, response_code, some_text',[
     ('/', 200, 'Do you want to know'), 
@@ -33,8 +37,6 @@ def test_index(test_client, route, response_code, some_text):
     assert bytes(some_text, 'utf -8') in test_client.get(route,
             content_type='html/test').data
 
-def test_home_page(test_client):
-    response = test_client.get('/')
-    assert response.status_code == 200
+
 
 
