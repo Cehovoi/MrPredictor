@@ -43,13 +43,6 @@ def init_db():
     db.drop_all()
 
 
-def test_gallery(test_client):
-    assert 200 == 200
-    print(test_client.get('/gallery').data)
-
-    #assert b'No predictions yet' in test_client.get('/gallery').data 
-
-
 def test_admin(test_client, init_db):
     response = test_client.post('/login',
                                 data=dict(username='Polya', password='123'),
@@ -57,8 +50,17 @@ def test_admin(test_client, init_db):
     assert response.status_code == 200
     assert b'Logout and Start page' in response.data
 
+
 def test_exhibit(test_client, init_db):
-    pass
+    response = test_client.post('/you',
+                                data=dict(name='Pit', size='12'),
+                                follow_redirects=True)
 
-
+    assert response.status_code == 200
+    assert b'love makes the world go round' in response.data
+    
+    response = test_client.get('/predictions', follow_redirects=True)
+    
+    assert b'Pit' in response.data
+    assert b'Sam' in response.data
 
