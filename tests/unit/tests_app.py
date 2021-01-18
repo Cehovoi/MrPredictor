@@ -10,7 +10,7 @@ from scribble import create_app
         'You should be redirected automatically to target URL'),
     ('/fail', 404,'The requested URL was not found')])
 def test_index(route, response_code, some_text):  
-    tester = create_app('config.TestingConfig').test_client()
+    tester = create_app('config.DevelopmentConfig').test_client()
     assert tester.get(route, 
             content_type='html/test').status_code == response_code  
     assert bytes(some_text, 'utf -8') in tester.get(route,

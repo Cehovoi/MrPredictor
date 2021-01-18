@@ -3,9 +3,11 @@
 Genitals
 {% endblock %}
 {% block body %}
-<center><a href='/answer/{{bigest}}' class='btn btn-success'>Bigest</a>  
-	<a href='/answer/{{smollest}}' class='btn btn-success'>Smallest</a>
-</center>
+{% if bigest %}
+	<center><a href='/answer/{{bigest}}' class='btn btn-success'>Bigest</a>  
+		<a href='/answer/{{smollest}}' class='btn btn-success'>Smallest</a>
+	</center>
+
 {% set count = namespace(point=count) %}
 	{% for prediction in predictions %}
 		{% if count.point %2 != 0 %}
@@ -34,4 +36,7 @@ Genitals
 
 		{% endif %}
 	{% endfor %}
+{% else %} 
+	<p><h5 style="color:DarkOrange;"> No predictions yet</h5></p>
+{% endif %}
 {% endblock %}

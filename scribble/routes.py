@@ -63,8 +63,12 @@ def answer(id):
 @main.route('/gallery')
 def gallery():
     predictions = sorted(Exhibit.query.all(), key = lambda x: len(x.img))
+    if predictions:
+        bigest = predictions[-1].id
+        smollest = predictions[0].id
+    else: bigest, smollest = None, None
     return render_template('gallery.html', predictions=predictions,
-                            bigest = predictions[-1].id, smollest = predictions[0].id)
+                            bigest = bigest, smollest = smollest)
 
 
 @main.route('/login', methods=['POST', 'GET'])
