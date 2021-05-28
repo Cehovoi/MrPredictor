@@ -2,7 +2,8 @@
 {% block title %}
 Answer
 {% endblock %}
-{% block body %}
+{% block body %}:q
+
 <div class='container mt-5'>
 	<div class='alert alert-info'>
 		<h2>{{ans.name}} </h2>
@@ -10,7 +11,7 @@ Answer
 		<p>{{ans.predictions}} <p>
 
 		{%for i in ans.img[:-1].split(',')%}
-			<p style="margin-bottom:-15px;"><center><samp>{{i[2:-1]}}</samp></center></p>
+			<p id="string_pad"><center><samp>{{i[2:-1]}}</samp></center></p>
 
 		{%endfor%}
 		<p>Anyway - dont take it pesonaly, it`s only a toilet joke. But remember - love makes the world go round, love each other!<p>

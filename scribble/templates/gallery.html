@@ -11,24 +11,24 @@ Genitals
 {% set count = namespace(point=count) %}
 	{% for prediction in predictions %}
 		{% if count.point %2 != 0 %}
-			<div style="background-color: transparent; float: right; width: 530px;">
+			<div class="right_side_gallery">
 				{%for pict in prediction.img[:-1].split(',')%}
-					<h5 style="color:#CA9F56;"><p style="margin-bottom:-15px;"><samp>{{pict[2:-1]}}</samp></p></h5>
+					<h5 id="rigth_color"><p id="string_pad"><samp>{{pict[2:-1]}}</samp></p></h5>
 				{%endfor%}
-				<h1 style="color:#D1462C;">{{prediction.name}}</h1>
-				<p style="margin-bottom: 20px;"></p>
+				<h1 id="left_color">{{prediction.name}}</h1>
+				<p id="pict_pad"></p>
 				{% set count.point = count.point -1 %}
 
 				
 			</div>
 		{% else %}
-			<div style="background-color: transparent; float: left; width: 1000px;">
+			<div class="left_side_gallery">
 				{%for pict in prediction.img[:-1].split(',')%}
-					<h5 style="color:#D1462C;"><p style="margin-bottom:-15px;"><samp>{{pict[2:-1]}}</samp></p></h5>
+					<h5 id="left_color"><p id="string_pad"><samp>{{pict[2:-1]}}</samp></p></h5>
 
 				{% endfor %}
-				<h1 style="color:#C8A652;" >{{prediction.name}} </h1>
-				<p style="margin-bottom: 20px;"></p>
+				<h1 id="rigth_color" >{{prediction.name}} </h1>
+				<p id="pict_pad"></p>
 				{% set count.point = count.point -1 %}
 			</div>
 

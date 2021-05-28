@@ -1,6 +1,9 @@
 .background {
     background-image: url('img/Back.jpg');
 }
+.back_fail {
+    background-image: url('img/fail.jpg');
+}
 
 #signboard {
     color: DarkOrange;
@@ -10,6 +13,25 @@
     background-color: transparent;
     float: right;
     width: 530px;
+}
+.left_side_gallery{
+    background-color: transparent;
+    float: left;
+    width: 1000px;
+}
+
+#rigth_color {
     color:#CA9F56;
-    margin-bottom:-15px;
+}
+
+#left_color {
+    color:#D1462C;
+}
+
+#string_pad {
+    margin-bottom: -15px;
+}
+
+#pict_pad {
+    margin-bottom: 20px;
 }
