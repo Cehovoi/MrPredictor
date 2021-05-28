@@ -11,7 +11,7 @@ Genitals
 {% set count = namespace(point=count) %}
 	{% for prediction in predictions %}
 		{% if count.point %2 != 0 %}
-			<div style="background-color: transparent; float: right; width: 530px;"> 
+			<div style="background-color: transparent; float: right; width: 530px;">
 				{%for pict in prediction.img[:-1].split(',')%}
 					<h5 style="color:#CA9F56;"><p style="margin-bottom:-15px;"><samp>{{pict[2:-1]}}</samp></p></h5>
 				{%endfor%}

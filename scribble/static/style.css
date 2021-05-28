@@ -1,0 +1,15 @@
+.background {
+    background-image: url('img/Back.jpg');
+}
+
+#signboard {
+    color: DarkOrange;
+}
+
+.right_side_gallery {
+    background-color: transparent;
+    float: right;
+    width: 530px;
+    color:#CA9F56;
+    margin-bottom:-15px;
+}
