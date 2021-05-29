@@ -4,8 +4,10 @@
   <meta charset="utf-8">
   <meta name="Zhenya_Vo" content="SitePoint">
   <title>{% block title %}{% endblock %}</title>
+
   <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css'>
-  <link rel="stylesheet" href="static/style.css" type="text/css"/>
+  <link rel="stylesheet" href="/static/style.css" type="text/css">
+  <!--link href"{{ url_for('static', filename='static/style.css') }}" -->
 </head>
 <body class="background">
 

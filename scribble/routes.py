@@ -21,7 +21,7 @@ def globs():
 @main.route('/')
 @main.route('/start')
 def index():
-    return render_template('start.html', )
+    return render_template('start.html')
 
 
 @main.route('/you', methods=['POST', 'GET'])
@@ -67,7 +67,7 @@ def gallery():
         bigest = predictions[-1].id
         smollest = predictions[0].id
     else: bigest, smollest = None, None
-    return render_template('gallery.html', predictions=predictions,
+    return render_template('gallery.html', predictions = predictions,
                             bigest = bigest, smollest = smollest)
 
 

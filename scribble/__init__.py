@@ -12,9 +12,10 @@ admin = Admin()
 login = LoginManager()
 migrate = Migrate()
 login.login_view = 'main.login'
+folder = os.path.dirname(os.path.abspath(__file__)) + '/static'
 
 def create_app(config):
-    app = Flask(__name__)
+    app = Flask(__name__) #, static_folder = folder)
     app.config.from_object(config)
     
     db.init_app(app)
