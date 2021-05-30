@@ -1,6 +1,6 @@
 import pytest
 from scribble import create_app
-from scribble.models import User
+from scribble.models import Owner
 from scribble.models import Exhibit
 from scribble.predictor import predictor
 from scribble import db
@@ -26,8 +26,8 @@ def init_db():
     
     db.create_all()
 
-    u1 = User(username = 'Polya')
-    User.set_password(u1, '123')    
+    u1 = Owner(username = 'Polya')
+    Owner.set_password(u1, '123')
     
     num = valid_num()
     predictions = predictor(num) 

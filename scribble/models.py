@@ -20,11 +20,11 @@ class Exhibit(db.Model):
 
 @login.user_loader
 def load_user(id):
-    return db.session.query(User).get(id) # Users.query.get(id)
+    return db.session.query(Owner).get(id) # Owner.query.get(id)
 
 
-class User(db.Model, UserMixin):
-    __tablename__ = 'users'
+class Owner(db.Model, UserMixin):
+    __tablename__ = 'owners'
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(), nullable=False, unique=True)
     password_hash = db.Column(db.String(), nullable=False)
@@ -33,7 +33,12 @@ class User(db.Model, UserMixin):
 
     def __repr__(self):
         return "<{}:{}>".format(self.id, self.username)
-    
+
+    @property
+    def set_password(self):
+        raise AttributeError('set_password is not readable attribute')
+
+    @set_password.setter
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
 
@@ -47,6 +52,6 @@ class MyModelView(ModelView):
         return current_user.is_authenticated
 
 admin.add_view(MyModelView(Exhibit, db.session))
-admin.add_view(MyModelView(User, db.session))
+admin.add_view(MyModelView(Owner, db.session))
 
 

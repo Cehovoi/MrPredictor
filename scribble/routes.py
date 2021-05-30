@@ -3,7 +3,7 @@ from flask_login import login_user, logout_user, current_user
 
 from scribble import db
 from .main import main
-from scribble.models import Exhibit, User
+from scribble.models import Exhibit, Owner
 from scribble.predictor import predictor
 from scribble.validator import validator
 
@@ -74,7 +74,7 @@ def gallery():
 @main.route('/login', methods=['POST', 'GET'])
 def login():
     if request.method == 'POST':        
-        user = db.session.query(User).filter(User.username == request.form['username']).first()
+        user = db.session.query(Owner).filter(User.username == request.form['username']).first()
         if user and user.check_password(request.form['password']):
             login_user(user)
             return redirect(url_for('admin.index'))
