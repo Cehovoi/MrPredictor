@@ -7,13 +7,13 @@ from scribble.models import Exhibit
 from scribble import db
 
 
-ls = []
 name_length = 4
 latter = lambda: choice(low)
 score = lambda: db.session.query(Exhibit).count()
 
 
 def fill(amount):
+    ls = []
     for _ in range(amount):
         s = choice(up)
         for _ in range(name_length):
@@ -27,7 +27,7 @@ def fill(amount):
     return printer(amount, 'increased')
 
 
-def eraser(amount, direction='start'):
+def erase(amount, direction='start'):
     if direction == 'start':
         exemplars = list(db.session.query(Exhibit).slice(0, amount))
     else:
@@ -37,6 +37,7 @@ def eraser(amount, direction='start'):
         db.session.delete(exemplar)
         db.session.commit()
     return printer(amount, 'decreased')
+
 
 def devastator():
     Exhibit.query.delete()

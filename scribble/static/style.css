@@ -1,5 +1,6 @@
 .background {
     background-image: url('img/Back.jpg');
+    background-attachment: fixed;
 }
 .back_fail {
     background-image: url('img/fail.jpg');
