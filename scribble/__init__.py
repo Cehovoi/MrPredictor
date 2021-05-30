@@ -9,8 +9,9 @@ import os, config
 
 db = SQLAlchemy()
 admin = Admin()
-login = LoginManager()
 migrate = Migrate()
+login = LoginManager()
+login.session_protection = 'strong'
 login.login_view = 'main.login'
 folder = os.path.dirname(os.path.abspath(__file__)) + '/static'
 
@@ -23,7 +24,7 @@ def create_app(config):
     login.init_app(app)
     migrate.init_app(app, db)
 
-    from .main import main as main_blueprint
+    from . main import main as main_blueprint
 
     app.register_blueprint(main_blueprint)
     

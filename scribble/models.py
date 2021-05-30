@@ -18,11 +18,6 @@ class Exhibit(db.Model):
         return '<Exhibit {} in {} place>'.format(self.name, self.id)
 
 
-@login.user_loader
-def load_user(id):
-    return db.session.query(Owner).get(id) # Owner.query.get(id)
-
-
 class Owner(db.Model, UserMixin):
     __tablename__ = 'owners'
     id = db.Column(db.Integer, primary_key=True)
@@ -44,7 +39,25 @@ class Owner(db.Model, UserMixin):
 
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
-    
+
+
+class User(UserMixin, db.Model):
+    __tablename__ = 'users'
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(),nullable=False, unique=True, index=True)
+    username = db.Column(db.String(), nullable=False, unique=True, index=True)
+    password_hash = db.Column(db.String(), nullable=False)
+    role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
+
+    created_on = db.Column(db.DateTime, default=datetime.utcnow)
+    updated_on = db.Column(db.DateTime, default=datetime.utcnow,  onupdate=datetime.utcnow)
+
+
+
+@login.user_loader
+def load_user(id):
+    return db.session.query(Owner).get(id) # Owner.query.get(id)
+
 
 class MyModelView(ModelView):
     can_delete = True
