@@ -5,7 +5,6 @@ from scribble.models import Owner
 @pytest.fixture(scope='module')
 def new_owner():
     u1 = Owner(username = 'Polya', set_password = '123')
-    #Owner.set_password(u1, '123')
     return u1
 
 def test_new_owner(new_owner):

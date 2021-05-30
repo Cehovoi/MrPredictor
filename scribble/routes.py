@@ -74,7 +74,7 @@ def gallery():
 @main.route('/login', methods=['POST', 'GET'])
 def login():
     if request.method == 'POST':        
-        user = db.session.query(Owner).filter(User.username == request.form['username']).first()
+        user = db.session.query(Owner).filter(Owner.username == request.form['username']).first()
         if user and user.check_password(request.form['password']):
             login_user(user)
             return redirect(url_for('admin.index'))
