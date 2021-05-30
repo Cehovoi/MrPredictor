@@ -26,8 +26,7 @@ def init_db():
     
     db.create_all()
 
-    u1 = Owner(username = 'Polya')
-    Owner.set_password(u1, '123')
+    u1 = Owner(username='Polya', set_password='123')
     
     num = valid_num()
     predictions = predictor(num) 
