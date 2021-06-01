@@ -11,9 +11,9 @@ def predictor(organ):
     
     value = abs(organ)
 
-    lovers = [('ASIAN', (randint(value//3.5, value))),
-            ('WHITE',(randint(value//1.3, value//0.7))), 
-            ('NIGER',(randint(value//1.1, value//0.5)))]
+    lovers = [('ASIAN', (randint(value//3.2, value))),
+            ('WHITE',(randint(value//1.2, value//0.8))),
+            ('NIGER',(randint(value//1.1, value//0.7)))]
 
     person = choice(lovers)
 
@@ -30,7 +30,7 @@ def predictor(organ):
     
 
     return (printer(lovers[0], lovers[1], gender, measure, race, dimension, 
-        organ, pronoun, size, value), drawing(lovers, person, gender))
+        organ, pronoun, size, value), drawing(lovers, person, gender, value))
 
 
 def printer(lover1, lover2, gender, measure, race, dimension, organ, pronoun, size, value):
