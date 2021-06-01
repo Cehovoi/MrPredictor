@@ -4,10 +4,9 @@ length = 4 # length of | | organ an inverse relationship, test value from 2 to 1
 
 def prepare_lovers(lovers, person, gender, organ):
     person = ('your', person[1])
-    lovers.append(person)
+    lovers += [person]
     lovers = [(item[0] + gender, item[1]) for item in lovers]
-    lovers = sorted(lovers, key=lambda x: x[1])
-    lovers = lovers + [('YourStaff', organ)]
+    lovers += [('YourStaff', organ)]
     return lovers
 
 def prepare_fillers(gender, order, staff):
@@ -23,86 +22,70 @@ def prepare_fillers(gender, order, staff):
         fillers.append(value)
     return fillers
 
-
 def drawing(lovers, person, gender, organ):
     lovers = prepare_lovers(lovers, person, gender, organ)
     order = list(range(len(lovers)))
     organs = [lovers[i][1] for i in order]
+    width = [i // var for i in organs]
+    organs = [i // length + 1 for i in organs]
     staff = len(organs) -1
-
+    organs[-1] = (max(organs) // length - organs[staff] // length) - 1 # inverse your stuff
     bottom = ''
     picture = []
     fillers = prepare_fillers(gender, order, staff) # list with dict - difference between user and prediction(gender)
 
-    for i, e in enumerate(organs):
+    for i, e in enumerate(width):
         space = ''
-        if e < var:
+        if e < 1:
             space += '.'
         bottom_staff = dots + space + ('(%s%s%s)%s' % (fillers[i]['bolls'],
-                                                     fillers[i]['line'] * (e // var),
+                                                     fillers[i]['line'] * e,
                                                      fillers[i]['bolls'], dots[:1]))
         bottom = bottom_staff + bottom # bootom_staff still need
 
-    bottom_length = len(bottom)
-    inscription = bottom_length * '.'
-    inscription_length = len(inscription)
+    inscription = len(bottom) * '.'
     order.reverse()  
     order = iter(order)
     
     for i, e in enumerate(bottom):
         if e == '(':
-            inscription = inscription[:i-2] + lovers[next(order
-                )][0] + inscription[i+7:]
-        if i == staff:
-            bottom = bottom[len(bottom_staff):]
-            bottom = '.' * len(bottom_staff) + bottom
+            inscription = inscription[:i-2] + lovers[next(order)][0] + inscription[i+7:]
 
+    if len(inscription) < len(bottom):
+        inscription = inscription + '.' * (len(bottom)-len(inscription))
+    else:
+        inscription = inscription[len(inscription) - len(bottom):]
+
+    bottom = bottom[len(bottom_staff):]
+    bottom = '.' * len(bottom_staff) + bottom
     picture.append(bottom)
 
-    if bottom_length < inscription_length:
-        difference  = inscription_length - bottom_length
-        if difference <= 2:
-            inscription = inscription[difference:]
-        else: 
-            iscription = inscription[2:]
-            inscription.replace('.', '', difference-2)  
-    
-    if bottom_length > inscription_length:
-        inscription += dots[:(bottom_length - inscription_length)]
-
-    width = organs
-    step = max(organs)//length - organs[staff]//length
     while max(organs)>0:
         body = ''
         for i, e in enumerate(organs):
             space = ''
-            if width[i] < var:
+            if width[i] < 1:
                     space = '.'
             if i == staff:
-                if max(organs) == 0:
+                if max(organs) == 1:
                     body = bottom_staff + body
                     continue
                 else:
-                    e = - step
+                    e = - e
             if e <= 0:
-                body =dots + dots + (dots[:1] * (
-                    (width[i]//var)-1)) +dots[:6-len(dots)] + body # this string draw end field with dots
-                                                                   # there is some cooficient - 6
+                body = dots + dots + (dots[:1] * (
+                        width[i] - 1)) + dots[:6 - len(dots)] + body  # this string draw end field with dots
+                                                                    # there is some cooficient - 6
             elif e == 1:
-                
-                body = dots + dots[:1]+ space + ('(%s)' % (fillers[i]['arrow'] *
-                    (width[i]//var))) + dots[:2] + body
-                organs[i] = 0
-            
+                body = dots + dots[:1] + space + (
+                        '(%s)' % (fillers[i]['arrow'] * width[i])) + dots[:2] + body
             else:
-                body= (dots + dots[:1]+ space + ('|%s|%s'% (fillers[i]['arrow'] *
-                    (width[i]//var), dots[:2]))) + body
-        
+                body = dots + dots[:1] + space + (
+                        '|%s|%s' % (fillers[i]['arrow'] * width[i], dots[:2])) + body
         picture.append(body)
 
-        organs = [i-length if i > length else i -(abs(i-1)
-            ) for i in organs]
-        step -= 1
+        organs = [i - 1 for i in organs]
+
     if gender == 'BOY': picture.reverse()
 
     picture += [inscription]
