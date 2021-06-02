@@ -37,7 +37,7 @@ def you():
                     comment=size_and_comment[1])
 
         predictions = predictor(size_and_comment[0]) # send name and size to predictor recive predictions and image
-        exhibit = Exhibit(name=name, predictions=predictions[0], img =predictions[1])
+        exhibit = Exhibit(size=size, name=name, predictions=predictions[0], img =predictions[1])
         try:
             db.session.add(exhibit)
             db.session.commit()
@@ -63,12 +63,28 @@ def answer(id):
 @main.route('/gallery')
 def gallery():
     predictions = sorted(Exhibit.query.all(), key = lambda x: len(x.img))
+    boys, girls = [], []
+    for person in predictions:
+        if person.size > 0:
+            boys.append(person)
+        else: girls.append(person)
+    diff = len(boys) - len(girls)
+    remainder_b, remainder_g = [], []
+    if diff > 0:
+        boys, remainder_b = boys[:-diff], boys[-diff:]
+    if diff < 0:
+        girls, remainder_g = girls[:diff], girls[diff:]
+    all =[]
+    for boy, girl in zip(boys, girls):
+        all.append(girl)
+        all.append(boy)
+    print('remainder_b---',remainder_b,'\n','remainder_g---', remainder_g)
     if predictions:
         bigest = predictions[-1].id
         smollest = predictions[0].id
     else: bigest, smollest = None, None
-    return render_template('gallery.html', predictions = predictions,
-                            bigest = bigest, smollest = smollest)
+    return render_template('gallery.html', predictions = all,
+                            bigest = bigest, smollest = smollest, remainder_b = remainder_b,remainder_g = remainder_g)
 
 
 @main.route('/login', methods=['POST', 'GET'])
