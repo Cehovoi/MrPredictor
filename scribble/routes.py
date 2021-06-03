@@ -6,7 +6,7 @@ from .main import main
 from scribble.models import Exhibit, Owner
 from scribble.predictor import predictor
 from scribble.validator import validator
-
+from collections import OrderedDict
 
 @main.context_processor
 def globs():
@@ -68,23 +68,31 @@ def gallery():
         if person.size > 0:
             boys.append(person)
         else: girls.append(person)
-    diff = len(boys) - len(girls)
-    remainder_b, remainder_g = [], []
-    if diff > 0:
-        boys, remainder_b = boys[:-diff], boys[-diff:]
-    if diff < 0:
-        girls, remainder_g = girls[:diff], girls[diff:]
-    all =[]
-    for boy, girl in zip(boys, girls):
-        all.append(girl)
-        all.append(boy)
-    print('remainder_b---',remainder_b,'\n','remainder_g---', remainder_g)
+    all_persons = OrderedDict()
+    if len(girls) > len(boys):
+        longest, shortest = iter(girls), iter(boys)
+        ranger = range(len(girls))
+        sex_1, sex_2 = 'girl', 'boy'
+    else:
+        longest, shortest = iter(boys), iter(girls)
+        ranger = range(len(boys))
+        sex_1, sex_2 = 'boy', 'girl'
+    for _ in ranger:
+        try:
+            all_persons.update({next(longest): sex_1})
+            all_persons.update({next(shortest): sex_2})
+        except(StopIteration):
+            if len(girls) - len(boys) == 0:
+                break
+            try:
+                all_persons.update({next(longest): sex_1})
+            except(StopIteration):
+                break
     if predictions:
         bigest = predictions[-1].id
         smollest = predictions[0].id
     else: bigest, smollest = None, None
-    return render_template('gallery.html', predictions = all,
-                            bigest = bigest, smollest = smollest, remainder_b = remainder_b,remainder_g = remainder_g)
+    return render_template('gallery.html', bigest = bigest, smollest = smollest, all_persons = all_persons)
 
 
 @main.route('/login', methods=['POST', 'GET'])

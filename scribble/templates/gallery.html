@@ -7,49 +7,26 @@ Genitals
 	<center><a href='/answer/{{bigest}}' class='btn btn-success'>Bigest</a>  
 		<a href='/answer/{{smollest}}' class='btn btn-success'>Smallest</a>
 	</center>
-{% set count = namespace(point=count) %}
-	{% for prediction in predictions %}
-		{% if count.point %2 != 0 %}
-			<div class="right_side_gallery">
-				{% for pict in prediction.img[:-1].split(',') %}
-					<h5 id="rigth_color"><p id="string_pad"><samp>{{pict[2:-1]}}</samp></p></h5>
-				{% endfor %}
-				<h1 id="left_color">{{prediction.name}}</h1>
-				<p id="pict_pad"></p>
-				{% set count.point = count.point -1 %}
-				{% if count.point == remainder_b|length %}
-					{% for person in remainder_b %}
-						{% for pict in person.img[:-1].split(',') %}
-							<h5 id="rigth_color"><p id="string_pad"><samp>{{pict[2:-1]}}</samp></p></h5>
-						{% endfor %}
-						<h1 id="left_color">{{prediction.name}}</h1>
-						<p id="pict_pad"></p>
-					{% endfor %}
-				{% endif %}
-			</div>
-		{% else %}
-			<div class="left_side_gallery">
-				{% for pict in prediction.img[:-1].split(',') %}
+{% for person, sex in all_persons.items() %}
+	{% if sex =='girl' %}
+		<div class="left_side_gallery">
+			{% for pict in person.img[:-1].split(',') %}
 					<h5 id="left_color"><p id="string_pad"><samp>{{pict[2:-1]}}</samp></p></h5>
-				{% endfor %}
-				<h1 id="rigth_color" >{{prediction.name}} </h1>
-				<p id="pict_pad"></p>
-				{% set count.point = count.point -1 %}
-				{% if count.point == remainder_g|length %}
-					{% for person in remainder_g %}
-						{% for pict in person.img[:-1].split(',') %}
-							<h5 id="rigth_color"><p id="string_pad"><samp>{{pict[2:-1]}}</samp></p></h5>
-						{% endfor %}
-						<h1 id="left_color">{{prediction.name}}</h1>
-						<p id="pict_pad"></p>
-					{% endfor %}
-				{% endif %}
+			{% endfor %}
+			<h1 id="rigth_color" >{{person.name}} </h1>
+			<p style="margin-bottom: 20px;"></p>
 			</div>
-
-
-
-		{% endif %}
-	{% endfor %}
+	{% endif %}
+	{% if sex =='boy' %}
+		<div class="right_side_gallery">
+			{% for pict in person.img[:-1].split(',') %}
+					<h5 id="rigth_color"><p id="string_pad"><samp>{{pict[2:-1]}}</samp></p></h5>
+			{% endfor %}
+			<h1 id="left_color" >{{person.name}} </h1>
+			<p id="pict_pad"></p>
+			</div>
+	{% endif %}
+{% endfor %}
 {% else %}
 	<p><h5 id="signboard"> No predictions yet</h5></p>
 {% endif %}
