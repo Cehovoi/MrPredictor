@@ -1,6 +1,6 @@
 import os
 from flask_script import Manager, Shell
-#from flask_migrate import MigrateCommand #
+#from flask_migrate import MigrateCommand
 from scribble import create_app, db
 from scribble.models import Owner, Exhibit
 

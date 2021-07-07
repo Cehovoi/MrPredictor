@@ -90,5 +90,5 @@ def drawing(lovers, person, gender, organ):
 
     picture += [inscription]
 
-    return str(picture)
+    return (str(picture), len(picture))
 

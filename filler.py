@@ -21,7 +21,7 @@ def fill(amount):
         ls.append((s, valid_num()))
     for i in ls:
         prediction = predictor(i[1])
-        e = Exhibit(size=i[1], name=i[0], predictions=prediction[0], img=prediction[1])
+        e = Exhibit(size=i[1],length=prediction[1][1], name=i[0], predictions=prediction[0], img=prediction[1][0])
         db.session.add(e)
         db.session.commit()
     return printer(amount, 'increased')

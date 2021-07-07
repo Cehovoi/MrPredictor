@@ -36,3 +36,14 @@
 #pict_pad {
     margin-bottom: 20px;
 }
+.box {
+    margin: 20px;
+    display: flex;
+}
+.box>* {
+    flex: 0 0 1200px;
+}
+
+
+
+

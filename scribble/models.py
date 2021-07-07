@@ -10,6 +10,7 @@ class Exhibit(db.Model):
     __tablename__ = 'exhibits'
     id = db.Column(db.Integer, primary_key=True)
     size = db.Column(db.Integer)
+    length = db.Column(db.Integer)
     name = db.Column(db.String(), nullable=False)
     predictions = db.Column(db.String(), nullable=False)
     img = db.Column(db.String(), nullable=False)

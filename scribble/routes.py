@@ -37,7 +37,7 @@ def you():
                     comment=size_and_comment[1])
 
         predictions = predictor(size_and_comment[0]) # send name and size to predictor recive predictions and image
-        exhibit = Exhibit(size=size, name=name, predictions=predictions[0], img =predictions[1])
+        exhibit = Exhibit(size=size,length=predictions[1][1], name=name, predictions=predictions[0], img=predictions[1][0])
         try:
             db.session.add(exhibit)
             db.session.commit()
@@ -62,7 +62,7 @@ def answer(id):
 
 @main.route('/gallery')
 def gallery():
-    predictions = sorted(Exhibit.query.all(), key = lambda x: len(x.img))
+    predictions = sorted(Exhibit.query.all(), key = lambda x: x.length)
     boys, girls = [], []
     for person in predictions:
         if person.size > 0:
@@ -79,13 +79,17 @@ def gallery():
         sex_1, sex_2 = 'boy', 'girl'
     for _ in ranger:
         try:
-            all_persons.update({next(longest): sex_1})
-            all_persons.update({next(shortest): sex_2})
+            long = next(longest)
+            short= next(shortest)
+            l_1, l_2 = long.length - short.length, short.length - long.length
+
+            all_persons.update({long: [sex_1, l_1]})
+            all_persons.update({short: [sex_2, l_2]})
         except(StopIteration):
             if len(girls) - len(boys) == 0:
                 break
             try:
-                all_persons.update({next(longest): sex_1})
+                all_persons.update({long: [sex_1, 0]})
             except(StopIteration):
                 break
     if predictions:
