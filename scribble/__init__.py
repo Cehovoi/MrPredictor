@@ -18,13 +18,16 @@ folder = os.path.dirname(os.path.abspath(__file__)) + '/static'
 
 def create_app(config):
     app = Flask(__name__) #, static_folder = folder)
-    app.config.from_object(config)
-    
+
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///exhibits_box_dev.db'
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    #app.config['DEBUG'] = True
     db.init_app(app)
+
     admin.init_app(app)
     login.init_app(app)
     migrate.init_app(app, db)
-
+    print(db)
     from . main import main as main_blueprint
     from . auth import auth as auth_blueprint
 
