@@ -9,7 +9,7 @@ Genitals
 	</center>
 {% for person, sex in all_persons.items() %}
 	<div class="box">
-		{% if sex=='girl' %}
+
 			<div>
 			{% for pict in person.img[:-1].split(',') %}
 					<h5 id="left_color"><p id="string_pad"><samp>{{pict[2:-1]}}</samp></p></h5>
@@ -17,7 +17,7 @@ Genitals
 			<h1 id="rigth_color" >{{person.name}} </h1>
 			<p style="margin-bottom: 20px;"></p>
 			</div>
-		{% else %}
+
 			<div>
 			{% for pict in person.img[:-1].split(',') %}
 					<h5 id="rigth_color"><p id="string_pad"><samp>{{pict[2:-1]}}</samp></p></h5>
@@ -25,7 +25,7 @@ Genitals
 			<h1 id="left_color" >{{person.name}} {{sex[1]*4}}</h1>
 			<p style="margin-bottom: 20;"></p>
 			</div>
-		{% endif %}
+
 	</div>
 {% endfor %}
 
