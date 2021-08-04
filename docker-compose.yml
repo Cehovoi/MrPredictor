@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+ web:
+  build: .
+  depends_on:
+   - mysqldb
+  command: python starter.py run --host='0.0.0.0'
+  ports:
+  - "5000:5000"
+  volumes:
+  - .:/app
+  - ./scribble:/app/scribble
+
+
+ mysqldb:
+  image: mysql
+  ports:
+  - 3306:3306
+  environment:
+  - MYSQL_ROOT_PASSWORD=root
+  volumes:
+  - mysql:/var/lib/mysql
+  - mysql_config:/etc/mysql
+  cap_add:
+  - SYS_NICE
+
+volumes:
+  mysql:
+  mysql_config:
+

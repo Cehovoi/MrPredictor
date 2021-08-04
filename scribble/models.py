@@ -5,29 +5,39 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 from scribble import db, admin, login
 
+class Occasions(db.Model):
+    __teblename__ = 'occasions'
+    id = db.Column(db.Integer, primary_key=True)
+    sex = db.Column(db.Integer)
+    comment = db.Column(db.Text, nullable=False)
+
+    def __repr__(self):
+        return '<Occasion {} in {} place>'.format(self.opus, self.id)
 
 class Exhibit(db.Model):
     __tablename__ = 'exhibits'
     id = db.Column(db.Integer, primary_key=True)
     size = db.Column(db.Integer)
     length = db.Column(db.Integer)
-    name = db.Column(db.String(), nullable=False)
-    predictions = db.Column(db.String(), nullable=False)
-    img = db.Column(db.String(), nullable=False)
+    name = db.Column(db.String(64), nullable=False)
+    predictions = db.Column(db.Text, nullable=False)
+    img = db.Column(db.Text, nullable=False)
     date = db.Column(db.DateTime, default=datetime.utcnow)
     
     def __repr__(self):
         return '<Exhibit {} in {} place>'.format(self.name, self.id)
 
 
+
+
 class User(UserMixin, db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String(),nullable=False, unique=True, index=True)
-    username = db.Column(db.String(), nullable=False, unique=True, index=True)
+    email = db.Column(db.String(64),nullable=False, unique=True, index=True)
+    username = db.Column(db.String(64), nullable=False, unique=True, index=True)
     size = db.Column(db.Integer)
-    pict = db.Column(db.String(), nullable=False, unique=True, index=True)
-    password_hash = db.Column(db.String(), nullable=False)
+    pict = db.Column(db.String(512), nullable=False, unique=True, index=True)
+    password_hash = db.Column(db.String(512), nullable=False)
     exhibit_id = db.Column(db.Integer, db.ForeignKey('exhibits.id'))
 
     created_on = db.Column(db.DateTime, default=datetime.utcnow)
@@ -51,8 +61,8 @@ class User(UserMixin, db.Model):
 class Owner(db.Model, UserMixin):
     __tablename__ = 'owners'
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(), nullable=False, unique=True)
-    password_hash = db.Column(db.String(), nullable=False)
+    username = db.Column(db.String(64), nullable=False, unique=True)
+    password_hash = db.Column(db.String(512), nullable=False)
     created_on = db.Column(db.DateTime, default=datetime.utcnow)
     updated_on = db.Column(db.DateTime, default=datetime.utcnow,  onupdate=datetime.utcnow)
 

@@ -2,7 +2,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_admin import Admin
-from flask_script import Manager
+#from flask_script import Manager
 from flask_migrate import Migrate
 import os, config
 
@@ -19,8 +19,10 @@ folder = os.path.dirname(os.path.abspath(__file__)) + '/static'
 def create_app(config):
     app = Flask(__name__) #, static_folder = folder)
 
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///exhibits_box_dev.db'
+    #app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///exhibits_box_dev.db'
+    app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+mysqlconnector://root:root@mysqldb/test_p"
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
     #app.config['DEBUG'] = True
     db.init_app(app)
 

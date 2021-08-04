@@ -7,6 +7,16 @@ from scribble.models import Exhibit, Owner
 from scribble.predictor import predictor
 from scribble.validator import validator
 from collections import OrderedDict
+'''
+@main.route('/s')
+def hello_world():
+  return 'Hello PREDICTOR APP!'
+
+@main.route('/mysql')
+def my_db():
+  db.create_all()
+  return "Create or not?"
+'''
 
 @main.context_processor
 def globs():
@@ -37,10 +47,17 @@ def you():
                     comment=size_and_comment[1])
 
         predictions = predictor(size_and_comment[0]) # send name and size to predictor recive predictions and image
-        exhibit = Exhibit(size=size,length=predictions[1][1], name=name, predictions=predictions[0], img=predictions[1][0])
+        exhibit = Exhibit(size=size, length=predictions[1][1], name=name, predictions=predictions[0], img=predictions[1][0])
+        print(exhibit)
         try:
             db.session.add(exhibit)
+        except Exception:
+            return 'DONT ADD'
+        try:
             db.session.commit()
+        except Exception:
+            return 'DONT COMMIT'
+        try:
             id = exhibit.id
             return redirect('/answer/%s' % id)
         except Exception:
@@ -115,5 +132,3 @@ def login():
 def logout():
     logout_user()
     return redirect('/start')
-
-
