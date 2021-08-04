@@ -51,13 +51,7 @@ def you():
         print(exhibit)
         try:
             db.session.add(exhibit)
-        except Exception:
-            return 'DONT ADD'
-        try:
             db.session.commit()
-        except Exception:
-            return 'DONT COMMIT'
-        try:
             id = exhibit.id
             return redirect('/answer/%s' % id)
         except Exception:
