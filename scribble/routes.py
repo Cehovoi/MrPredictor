@@ -3,10 +3,11 @@ from flask_login import login_user, logout_user, current_user
 
 from scribble import db
 from .main import main
-from scribble.models import Exhibit, Owner
+from scribble.models import Exhibit, Owner, filler
 from scribble.predictor import predictor
 from scribble.validator import validator
 from collections import OrderedDict
+
 '''
 @main.route('/s')
 def hello_world():
@@ -17,6 +18,10 @@ def my_db():
   db.create_all()
   return "Create or not?"
 
+@main.route('/fill')
+def fill():
+    filler()
+    return 'fill or not to fill'
 
 @main.context_processor
 def globs():

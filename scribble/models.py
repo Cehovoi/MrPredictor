@@ -5,14 +5,87 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 from scribble import db, admin, login
 
-class Occasions(db.Model):
+from random import choice, randint
+from scribble.imager import drawing
+
+def predictor(organ):
+    if organ < 0:
+        gender = 'BOY';
+        pronoun = 'he';
+        measure = 'LONG'
+    else:
+        gender = 'GIRL';
+        pronoun = 'she';
+        measure = 'DEEP'
+
+    value = abs(organ)
+
+    lovers = [('ASIAN', (randint(value // 3.2, value))),
+              ('WHITE', (randint(value // 1.2, value // 0.8))),
+              ('NIGER', (randint(value // 1.1, value // 0.7)))]
+
+    person = choice(lovers)
+
+    race, size = person[0], person[1]
+
+    del (lovers[lovers.index(person)])
+
+    if size < value // 1.3:
+        dimension = 'SMALL'
+    elif size > value // 0.7:
+        dimension = 'BIG'
+    else:
+        dimension = 'MEDDLE'
+    return (lovers[0], lovers[1], gender, measure, race, dimension,
+        organ, pronoun, size, value),  drawing(lovers, person, gender, value)
+#predictions(size, value, gender))
+
+def filler():
+    comments = open('comments.txt')
+    keys = open('keys.txt')
+    epilogue = open('epilogue.txt')
+    while True:
+        c = comments.readline()
+        k = keys.readline()
+        if c == '' or k == '':
+            break
+        try:
+            ocassion  = Occasion(comment = c, key = k)
+            db.session.add(ocassion)
+            db.session.commit()
+        except Exception:
+            print('Error while adding  comments and keys to db in models.filler')
+    if db.session.query(Epilogue).all() == []:
+        try:
+            db.session.add(Epilogue(epilogue = epilogue.read()))
+            db.session.commit()
+        except Exception:
+            print('Error while adding epilogue to db in models.filler')
+
+def pointer(size, value, m):
+    counter = db.session.query(Occasion).count()
+    for id in range(counter + 1):
+        occasion = Occasion.query.get(id)
+        if eval(occasion.key):
+            exhibit = Exhibit(size=size, length=predictions[1][1], name=name, predictions=predictions[0],
+                              img=predictions[1][0])
+
+
+
+class Epilogue(db.Model):
+    __tablename__ = 'epilogue'
+    id = db.Column(db.Integer, primary_key=True)
+    epilogue = db.Column(db.Text, nullable=False)
+
+    def __repr__(self):
+        return '<Epilogue {} >'.format(self.epilogue)
+
+class Occasion(db.Model):
     __teblename__ = 'occasions'
     id = db.Column(db.Integer, primary_key=True)
-    sex = db.Column(db.Integer)
+    key = db.Column(db.String(128), nullable=False)
     comment = db.Column(db.Text, nullable=False)
-    def filler(self):
-        if db.session.querry(Ocassions).all() == []
-            pass
+
     def __repr__(self):
         return '<Occasion {} in {} place>'.format(self.comment, self.id)
 
@@ -98,7 +171,8 @@ class MyModelView(ModelView):
     def is_accessible(self):
         return True #current_user.is_authenticated
 
-admin.add_view(MyModelView(Occasions, db.session))
+admin.add_view(MyModelView(Occasion, db.session))
+admin.add_view(MyModelView(Epilogue, db.session))
 admin.add_view(MyModelView(Exhibit, db.session))
 admin.add_view(MyModelView(Owner, db.session))
 

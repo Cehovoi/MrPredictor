@@ -1,0 +1,11 @@
+size < 6:
+size < 12 and value < 12:
+size >= 22 and value >= 22 and (max(size, value) - min(size, value))< 7:
+size//1.2 <= value and value <= size * 1.2:
+value * 1.5 <= size and m == 'BOY':
+value * 1.5 <= size and m != 'BOY':
+size <= value and value <= size * 1.4 and m =='BOY':
+size <= value and value <= size * 1.4 and m !='BOY':
+size * 1.4 <= value and m =='BOY':
+size * 1.4 <= value and m !='BOY':
+
