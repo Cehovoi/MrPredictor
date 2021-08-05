@@ -11,12 +11,12 @@ from collections import OrderedDict
 @main.route('/s')
 def hello_world():
   return 'Hello PREDICTOR APP!'
-
+'''
 @main.route('/mysql')
 def my_db():
   db.create_all()
   return "Create or not?"
-'''
+
 
 @main.context_processor
 def globs():
@@ -109,6 +109,10 @@ def gallery():
     else: bigest, smollest = None, None
     return render_template('gallery.html', bigest = bigest, smollest = smollest, all_persons = all_persons)
 
+
+@main.route('/admin')
+def admin():
+    return redirect(url_for('admin.index'))
 
 @main.route('/login', methods=['POST', 'GET'])
 def login():

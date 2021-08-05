@@ -10,9 +10,11 @@ class Occasions(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     sex = db.Column(db.Integer)
     comment = db.Column(db.Text, nullable=False)
-
+    def filler(self):
+        if db.session.querry(Ocassions).all() == []
+            pass
     def __repr__(self):
-        return '<Occasion {} in {} place>'.format(self.opus, self.id)
+        return '<Occasion {} in {} place>'.format(self.comment, self.id)
 
 class Exhibit(db.Model):
     __tablename__ = 'exhibits'
@@ -94,8 +96,9 @@ def load_user(id):
 class MyModelView(ModelView):
     can_delete = True
     def is_accessible(self):
-        return current_user.is_authenticated
+        return True #current_user.is_authenticated
 
+admin.add_view(MyModelView(Occasions, db.session))
 admin.add_view(MyModelView(Exhibit, db.session))
 admin.add_view(MyModelView(Owner, db.session))
 
