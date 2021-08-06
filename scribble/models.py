@@ -61,7 +61,7 @@ def filler():
             db.session.commit()
         except Exception:
             print('Error while adding epilogue to db in models.filler')
-
+'''
 def pointer(size, value, m):
     counter = db.session.query(Occasion).count()
     for id in range(counter + 1):
@@ -70,7 +70,7 @@ def pointer(size, value, m):
             exhibit = Exhibit(size=size, length=predictions[1][1], name=name, predictions=predictions[0],
                               img=predictions[1][0])
 
-
+'''
 
 class Epilogue(db.Model):
     __tablename__ = 'epilogue'
