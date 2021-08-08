@@ -18,10 +18,39 @@ def my_db():
   db.create_all()
   return "Create or not?"
 
-@main.route('/fill')
-def fill():
+@main.route('/oc_fill')
+def oc_fill():
     filler()
-    return 'fill or not to fill'
+    return 'Fill the Ocassion'
+
+@main.route('/ex_fill',methods=['POST', 'GET'])
+def ex_fill():
+    if request.method == 'POST':
+        from random import choice, randint
+        from string import ascii_lowercase as low
+        from string import ascii_uppercase as up
+        latter = lambda: choice(low)
+        amount = int(request.form['size'])
+        name_length = 4
+        ls = []
+        for num in range(amount):
+            s = choice(up)
+            for _ in range(name_length):
+                s += latter()
+            if num%2 == 0:
+                r = randint(-30, -7)
+            else: r = randint(7, 30)
+
+            ls.append((s, r))
+        for name_size in ls:
+            try:
+                id = predictor(name_size[1], name_size[0])
+            except Exception:
+                return predictor(name_size[0],name_size[1]) or 'Dont add %s exemplars in %s step'% (amount, name_size[0], name_size[1])
+        return redirect('/gallery')
+
+    return render_template('you.html')
+
 
 @main.route('/create_owner')
 def owner():

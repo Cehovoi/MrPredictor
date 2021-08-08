@@ -76,7 +76,7 @@ def predictor(your_size, name):
         db.session.add(exhibit)
         db.session.commit()
     except Exception:
-        return 'Somthing wrong with adding comlit exhibit to db'
+        return 'Something wrong with adding complit exhibit to db'
     return exhibit.id
 
 
