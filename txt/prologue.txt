@@ -1,3 +1,3 @@
-Tomorrow you HAVEN\'T a date with {first_race} {sex} {first_size} {measure} and {second_race} {sex} {second_size} {measure}.
+Tomorrow you HAVEN'T a date with {first_race} {sex} {first_size} {measure} and {second_race} {sex} {second_size} {measure}.
 But you meet {choice_race} {sex} with {dimension} genital.
 Your size is {your_size} {pronoun} is {choice_size}.

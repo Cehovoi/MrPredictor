@@ -115,7 +115,7 @@ class Occasion(db.Model):
         return '<{} - Key {}  Occasion - {}>'.format(self.id, self.key, self.comment)
 
 
-class Exhibit(db.Model):
+class Exhibit(UserMixin, db.Model):
     __tablename__ = 'exhibits'
     id = db.Column(db.Integer, primary_key=True)
     your_size = db.Column(db.Integer)
@@ -183,20 +183,20 @@ class Owner(db.Model, UserMixin):
         return "<{}:{}>".format(self.id, self.username)
 
 
-'''
+
 @login.user_loader
 def load_user(id):
     return db.session.query(Owner).get(id) # Owner.query.get(id)
-'''
 
+'''
 @login.user_loader
 def load_user(id):
     return db.session.query(User).get(id) # Owner.query.get(id
-
+'''
 class MyModelView(ModelView):
     can_delete = True
     def is_accessible(self):
-        return True #current_user.is_authenticated
+        return current_user.is_authenticated
 
 
 admin.add_view(MyModelView(Collector, db.session))

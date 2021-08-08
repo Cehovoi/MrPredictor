@@ -6,18 +6,18 @@ from scribble.models import Owner, Exhibit
 from flask.cli import FlaskGroup
 
 import click
-app = create_app(os.getenv('FLASK_ENV') or
-        'config.DevelopmentConfig')
-app.config['SECRET_KEY'] = 'mysecret'
+app = create_app(os.getenv('FLASK_ENV'))
 '''
+app.config['SECRET_KEY'] = 'mysecret'
+
 app = create_app(os.getenv('FLASK_ENV') or
         'config.DevelopmentConfig')'''
 cli = FlaskGroup(app)
-
+'''
 @app.shell_context_processor
 def make_shell_context():
     return dict(app=app, db=db, Owner=Owner, Exhibit=Exhibit)
-
+'''
 
 
 '''

@@ -23,6 +23,15 @@ def fill():
     filler()
     return 'fill or not to fill'
 
+@main.route('/create_owner')
+def owner():
+    admin = Owner(username = 'Zhenya')
+    admin.set_password='123'
+    db.session.add(admin)
+    db.session.commit()
+    return 'ADD admin Zhenya'
+
+
 @main.context_processor
 def globs():
     counter = lambda: db.session.query(Exhibit).count()
@@ -61,7 +70,7 @@ def you():
 
 @main.route('/predictions')
 def predictions():
-    predictions = Exhibit.query.order_by(Exhibit.date.desc()).all()
+    predictions = Exhibit.query.order_by(Exhibit.created_on.desc()).all()
     return render_template('predictions.html', predictions=predictions)
 
 
@@ -111,10 +120,17 @@ def gallery():
     return render_template('gallery.html', bigest = bigest, smollest = smollest, all_persons = all_persons)
 
 
-@main.route('/admin')
+@main.route('/login', methods=['POST', 'GET'])
 def admin():
-    return redirect(url_for('admin.index'))
-
+    if request.method == 'POST':
+        admin = db.session.query(Owner).filter(Owner.username == request.form['username']).first()
+        if admin and admin.check_password(request.form['password']):
+            login_user(admin)
+            return redirect(url_for('admin.index'))
+        else:
+            return render_template('fail.html')
+    return render_template('login.html')
+''''
 @main.route('/login', methods=['POST', 'GET'])
 def login():
     if request.method == 'POST':        
@@ -126,7 +142,7 @@ def login():
             return render_template('fail.html')
     return render_template('login.html')
 
-
+'''
 @main.route('/logout')
 def logout():
     logout_user()

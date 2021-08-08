@@ -10,11 +10,13 @@ Base
 		{% for i in predictions %}
 			<div class='alert alert-info'>
 				<h2>{{i.name}}</h2>
-				<p>{{i.predictions}}</p>
-				<p><b>{{ i.date.date() }}</b></p>
+				<p>{{i.prologue}}</p>
+				<p>{{i.occasion.comment}}</p>
+				<p><b>{{ i.created_on.date() }}</b></p>
 				{%for i in i.img[:-1].split(',')%}
 					<p id="string_pad"><center><samp>{{i[2:-1]}}</samp></center></p>
 				{%endfor%}
+
 			</div>
 		{% endfor %}
 	{% else %}

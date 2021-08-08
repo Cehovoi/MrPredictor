@@ -22,14 +22,14 @@ def create_app(config):
     #app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///exhibits_box_dev.db'
     app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+mysqlconnector://root:root@mysqldb/test_p"
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
+    app.config['SECRET_KEY'] = 'mysecret'
     #app.config['DEBUG'] = True
     db.init_app(app)
 
     admin.init_app(app)
     login.init_app(app)
     migrate.init_app(app, db)
-    print(db)
+
     from . main import main as main_blueprint
     from . auth import auth as auth_blueprint
 
