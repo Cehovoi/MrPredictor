@@ -86,7 +86,7 @@ def gallery():
     predictions = sorted(Exhibit.query.all(), key = lambda x: x.length)
     boys, girls = [], []
     for person in predictions:
-        if person.size > 0:
+        if person.your_size > 0:
             boys.append(person)
         else: girls.append(person)
     all_persons = OrderedDict()
@@ -121,7 +121,7 @@ def gallery():
 
 
 @main.route('/login', methods=['POST', 'GET'])
-def admin():
+def login():
     if request.method == 'POST':
         admin = db.session.query(Owner).filter(Owner.username == request.form['username']).first()
         if admin and admin.check_password(request.form['password']):
@@ -130,19 +130,7 @@ def admin():
         else:
             return render_template('fail.html')
     return render_template('login.html')
-''''
-@main.route('/login', methods=['POST', 'GET'])
-def login():
-    if request.method == 'POST':        
-        user = db.session.query(Owner).filter(Owner.username == request.form['username']).first()
-        if user and user.check_password(request.form['password']):
-            login_user(user)
-            return redirect(url_for('admin.index'))
-        else: 
-            return render_template('fail.html')
-    return render_template('login.html')
 
-'''
 @main.route('/logout')
 def logout():
     logout_user()
