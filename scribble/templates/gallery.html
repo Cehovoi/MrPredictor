@@ -7,30 +7,34 @@ Genitals
 	<center><a href='/answer/{{bigest}}' class='btn btn-success'>Bigest</a>  
 		<a href='/answer/{{smollest}}' class='btn btn-success'>Smallest</a>
 	</center>
-{% for person, sex in all_persons.items() %}
-	<div class="box">
-	{% if sex == 'boy' %}
-			<div>
-			{% for pict in person.img[:-1].split(',') %}
-					<h5 id="left_color"><p id="string_pad"><samp>{{pict[2:-1]}}</samp></p></h5>
-			{% endfor %}
-			<h1 id="rigth_color" >{{person.name}} </h1>
-			<p style="margin-bottom: 20px;"></p>
-			</div>
-	{% else %}
-			<div>
-			{% for pict in person.img[:-1].split(',') %}
-					<h5 id="rigth_color"><p id="string_pad"><samp>{{pict[2:-1]}}</samp></p></h5>
-			{% endfor %}
-			<h1 id="left_color" >{{person.name}} {{sex[1]*4}}</h1>
-			<p style="margin-bottom: 20;"></p>
-			</div>
-	{% endif %}
-	</div>
-{% endfor %}
-
 {% else %}
 	<p><h5 id="signboard"> No predictions yet</h5></p>
 {% endif %}
+<div class='some-page-wrapper'>
+	{% for pair in ans %}
+		<div class='row'>
+				<div class='column'>
+					<div class='blue-column'>
+						{% for pict in pair[0].img[:-1].split(',') %}
+							<h5 id="left_color"><p id="string_pad"><samp>{{pict[2:-1]}}</samp></p></h5>
+						{% endfor %}
+						<h1 id="rigth_color" >{{pair[0].name}} </h1>
+						<p style="margin-bottom: 200px;"></p>
+
+					</div>
+				</div>
+				<div class='column'>
+					<div class='green-column'>
+						{% for pict in pair[1].img[:-1].split(',') %}
+							<h5 id="rigth_color"><p id="string_pad"><samp>{{pict[2:-1]}}</samp></p></h5>
+						{% endfor %}
+						<h1 id="left_color" >{{pair[1].name}} </h1>
+						<p style="margin-bottom: 200px;"></p>
+					</div>
+				</div>
+		</div>
+	{% endfor %}
+</div>
+
 {% endblock %}
 

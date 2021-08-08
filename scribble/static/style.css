@@ -36,14 +36,37 @@
 #pict_pad {
     margin-bottom: 20px;
 }
-.box {
-    margin: 20px;
-    display: flex;
+
+
+.some-page-wrapper {
+  margin: 15px;
+  background-color: transparent;
 }
-.box>* {
-    flex: 0 0 1200px;
+
+.row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
 }
 
+.column {
+  display: flex;
+  flex-direction: column;
+  flex-basis: 100%;
+  flex: 1;
+  margin-top: 70px;
+  margin-bottom: 70px;
+  padding: 20px;
+}
 
+.blue-column {
+  background-color: transparent;
+  height: 100px;
+}
 
-
+.green-column {
+  background-color: transparent;
+  height: 100px;
+  margin-left: auto;
+}
