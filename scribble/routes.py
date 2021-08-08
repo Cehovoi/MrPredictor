@@ -7,7 +7,7 @@ from scribble.models import Exhibit, Owner, Collector, filler, predictor
 #from scribble.predictor import predictor
 from scribble.validator import validator
 from collections import OrderedDict
-
+from itertools import zip_longest
 '''
 @main.route('/s')
 def hello_world():
@@ -113,15 +113,13 @@ def answer(id):
 @main.route('/gallery')
 def gallery():
     predictions = sorted(Exhibit.query.all(), key = lambda x: x.length)
-    boys, girls, more = [], [], 0
+    boys, girls = [], []
     for person in predictions:
         if person.your_size > 0:
             boys.append(person)
-            more += 1
         else:
             girls.append(person)
-            more -= 1
-    ans = zip(boys, girls)
+    ans = zip_longest(boys, girls)
     if predictions:
         bigest = predictions[-1].id
         smollest = predictions[0].id

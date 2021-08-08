@@ -15,25 +15,31 @@ Genitals
 		<div class='row'>
 				<div class='column'>
 					<div class='blue-column'>
-						{% for pict in pair[0].img[:-1].split(',') %}
-							<h5 id="left_color"><p id="string_pad"><samp>{{pict[2:-1]}}</samp></p></h5>
-						{% endfor %}
-						<h1 id="rigth_color" >{{pair[0].name}} </h1>
-						<p style="margin-bottom: 200px;"></p>
-
+						{% if pair[0] == None %}
+							<p></p><h2 id="left_color">On this page more predictions for girls</h2></p>
+						{% else %}
+							{% for pict in pair[0].img[:-1].split(',') %}
+								<h5 id="left_color"><p id="string_pad"><samp>{{pict[2:-1]}}</samp></p></h5>
+							{% endfor %}
+							<h1 id="rigth_color" >{{pair[0].name}} </h1>
+						{% endif %}
 					</div>
 				</div>
 				<div class='column'>
 					<div class='green-column'>
-						{% for pict in pair[1].img[:-1].split(',') %}
-							<h5 id="rigth_color"><p id="string_pad"><samp>{{pict[2:-1]}}</samp></p></h5>
-						{% endfor %}
-						<h1 id="left_color" >{{pair[1].name}} </h1>
-						<p style="margin-bottom: 200px;"></p>
+						{% if pair[1] == None %}
+							<p><h2 id="left_color">On this page more predictions for boys</h2></p>
+						{% else %}
+							{% for pict in pair[1].img[:-1].split(',') %}
+								<h5 id="rigth_color"><p id="string_pad"><samp>{{pict[2:-1]}}</samp></p></h5>
+							{% endfor %}
+							<h1 id="left_color" >{{pair[1].name}} </h1>
+						{% endif %}
 					</div>
 				</div>
 		</div>
 	{% endfor %}
+
 </div>
 
 {% endblock %}
