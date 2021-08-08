@@ -13,6 +13,7 @@ app.config['SECRET_KEY'] = 'mysecret'
 app = create_app(os.getenv('FLASK_ENV') or
         'config.DevelopmentConfig')'''
 cli = FlaskGroup(app)
+
 @app.shell_context_processor
 def make_shell_context():
     return dict(app=app, db=db, Owner=Owner, Exhibit=Exhibit)

@@ -8,13 +8,13 @@ Answer
 	<div class='alert alert-info'>
 		<h2>{{ans.name}} </h2>
 		<p> Ok {{ans.name}}, lets see who did you meet and who didn't. <p>
-		<p>{{ans.predictions}} <p>
+		<p>{{ans.prologue}} <p>
 
 		{%for i in ans.img[:-1].split(',')%}
 			<p id="string_pad"><center><samp>{{i[2:-1]}}</samp></center></p>
 
 		{%endfor%}
-		<p>Anyway - dont take it pesonaly, it`s only a toilet joke. But remember - love makes the world go round, love each other!<p>
+		<p>{{epilogue}}<p>
 	</div>
 </div>
 	<center><a class='btn btn-warning' href='/you'>One more prediction?</a></center>

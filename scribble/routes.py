@@ -3,8 +3,8 @@ from flask_login import login_user, logout_user, current_user
 
 from scribble import db
 from .main import main
-from scribble.models import Exhibit, Owner, filler
-from scribble.predictor import predictor
+from scribble.models import Exhibit, Owner, Collector, filler, predictor
+#from scribble.predictor import predictor
 from scribble.validator import validator
 from collections import OrderedDict
 
@@ -50,14 +50,9 @@ def you():
         if size_and_comment[1]: #check: size_and_comment[1] - field with error
             return render_template('error.html', 
                     comment=size_and_comment[1])
-
-        predictions = predictor(size_and_comment[0]) # send name and size to predictor recive predictions and image
-        exhibit = Exhibit(size=size, length=predictions[1][1], name=name, predictions=predictions[0], img=predictions[1][0])
-        print(exhibit)
         try:
-            db.session.add(exhibit)
-            db.session.commit()
-            id = exhibit.id
+            id = predictor(size_and_comment[0], name)
+
             return redirect('/answer/%s' % id)
         except Exception:
             return 'Something went wrong with db'
@@ -73,7 +68,8 @@ def predictions():
 @main.route('/answer/<int:id>')
 def answer(id):
     ans = Exhibit.query.get(id)
-    return render_template('answer.html', ans=ans)
+    epilogue = Collector.query.get(1).epilogue
+    return render_template('answer.html', ans=ans, epilogue=epilogue)
 
 
 @main.route('/gallery')

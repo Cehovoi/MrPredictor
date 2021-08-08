@@ -8,17 +8,42 @@ from scribble import db, admin, login
 from random import choice, randint
 from scribble.imager import drawing
 
-def predictor(organ):
-    if organ < 0:
-        gender = 'BOY';
+
+def filler():
+    comments = open('txt/comments.txt')
+    keys = open('txt/keys.txt')
+    prologue = open('txt/prologue.txt')
+    epilogue = open('txt/epilogue.txt')
+    while True:
+        c = comments.readline()
+        k = keys.readline()
+        if c == '' or k == '':
+            break
+        try:
+            ocassion = Occasion(comment=c, key=k)
+            db.session.add(ocassion)
+            db.session.commit()
+        except Exception:
+            return 'Error while adding  comments and keys to db in models.filler'
+    if db.session.query(Collector).all() == []:
+        try:
+            db.session.add(Collector(prologue=prologue.read(), epilogue=epilogue.read()))
+            db.session.commit()
+        except Exception:
+            return 'Error while adding collector to db in models.filler'
+
+
+def predictor(your_size, name):
+    if your_size < 0:
+        sex = 'BOY';
         pronoun = 'he';
         measure = 'LONG'
     else:
-        gender = 'GIRL';
+        sex = 'GIRL';
         pronoun = 'she';
         measure = 'DEEP'
 
-    value = abs(organ)
+    value = abs(your_size)
 
     lovers = [('ASIAN', (randint(value // 3.2, value))),
               ('WHITE', (randint(value // 1.2, value // 0.8))),
@@ -26,59 +51,58 @@ def predictor(organ):
 
     person = choice(lovers)
 
-    race, size = person[0], person[1]
+    choice_race, choice_size = person[0], person[1]
 
     del (lovers[lovers.index(person)])
 
-    if size < value // 1.3:
+    if choice_size < value // 1.3:
         dimension = 'SMALL'
-    elif size > value // 0.7:
+    elif choice_size > value // 0.7:
         dimension = 'BIG'
     else:
         dimension = 'MEDDLE'
-    return (lovers[0], lovers[1], gender, measure, race, dimension,
-        organ, pronoun, size, value),  drawing(lovers, person, gender, value)
-#predictions(size, value, gender))
+    #important arg order in call collector_string
+    prologue = collector_string(first_race=lovers[0][0], first_size=lovers[0][1],
+                                second_race=lovers[1][0], second_size=lovers[1][1],
+                                sex=sex, measure=measure, choice_race=choice_race,
+                                dimension=dimension, your_size=your_size, pronoun=pronoun,
+                                choice_size=choice_size)
+    epilog = Collector.query.get(1).epilogue
+    comment_num = comparative(your_size, choice_size, sex)
+    picture = drawing(lovers, person, sex, value)#recive list of two values img and length
+    exhibit = Exhibit(your_size=your_size, length=picture[1], name=name,
+                      img=picture[0], prologue=prologue, occasion_id=comment_num)
+    try:
+        db.session.add(exhibit)
+        db.session.commit()
+    except Exception:
+        return 'Somthing wrong with adding comlit exhibit to db'
+    return exhibit.id
 
-def filler():
-    comments = open('comments.txt')
-    keys = open('keys.txt')
-    epilogue = open('epilogue.txt')
-    while True:
-        c = comments.readline()
-        k = keys.readline()
-        if c == '' or k == '':
-            break
-        try:
-            ocassion  = Occasion(comment = c, key = k)
-            db.session.add(ocassion)
-            db.session.commit()
-        except Exception:
-            print('Error while adding  comments and keys to db in models.filler')
-    if db.session.query(Epilogue).all() == []:
-        try:
-            db.session.add(Epilogue(epilogue = epilogue.read()))
-            db.session.commit()
-        except Exception:
-            print('Error while adding epilogue to db in models.filler')
-'''
-def pointer(size, value, m):
+
+def collector_string(**kwargs):
+    collector = Collector.query.get(1).prologue #hardcode id
+    prologue = collector.format(**kwargs) #args = locals()
+    return prologue
+
+
+def comparative(your_size, choice_size, sex):
+    your_size, choice_size = abs(your_size), abs(choice_size)
     counter = db.session.query(Occasion).count()
-    for id in range(counter + 1):
+    for id in range(1, counter + 1):
         occasion = Occasion.query.get(id)
         if eval(occasion.key):
-            exhibit = Exhibit(size=size, length=predictions[1][1], name=name, predictions=predictions[0],
-                              img=predictions[1][0])
+            return id
 
-'''
 
-class Epilogue(db.Model):
-    __tablename__ = 'epilogue'
+class Collector(db.Model):
+    __tablename__ = 'collector'
     id = db.Column(db.Integer, primary_key=True)
+    prologue = db.Column(db.Text, nullable=False)
     epilogue = db.Column(db.Text, nullable=False)
-
     def __repr__(self):
         return '<Epilogue {} >'.format(self.epilogue)
+
 
 class Occasion(db.Model):
     __teblename__ = 'occasions'
@@ -86,23 +110,26 @@ class Occasion(db.Model):
     key = db.Column(db.String(128), nullable=False)
     comment = db.Column(db.Text, nullable=False)
 
+    # exhibits = db.relationship('Exhibit', back_populates='occasion', lazy=True)
     def __repr__(self):
-        return '<Occasion {} in {} place>'.format(self.comment, self.id)
+        return '<{} - Key {}  Occasion - {}>'.format(self.id, self.key, self.comment)
+
 
 class Exhibit(db.Model):
     __tablename__ = 'exhibits'
     id = db.Column(db.Integer, primary_key=True)
-    size = db.Column(db.Integer)
+    your_size = db.Column(db.Integer)
     length = db.Column(db.Integer)
     name = db.Column(db.String(64), nullable=False)
-    predictions = db.Column(db.Text, nullable=False)
     img = db.Column(db.Text, nullable=False)
-    date = db.Column(db.DateTime, default=datetime.utcnow)
-    
+    prologue = db.Column(db.Text, nullable=False)
+    occasion_id = db.Column(db.Integer, db.ForeignKey('occasion.id'))
+    occasion = db.relationship('Occasion')  # ('Occasion', back_populates="exhibits")
+
+    created_on = db.Column(db.DateTime, default=datetime.utcnow)
+
     def __repr__(self):
         return '<Exhibit {} in {} place>'.format(self.name, self.id)
-
-
 
 
 class User(UserMixin, db.Model):
@@ -171,8 +198,9 @@ class MyModelView(ModelView):
     def is_accessible(self):
         return True #current_user.is_authenticated
 
+
+admin.add_view(MyModelView(Collector, db.session))
 admin.add_view(MyModelView(Occasion, db.session))
-admin.add_view(MyModelView(Epilogue, db.session))
 admin.add_view(MyModelView(Exhibit, db.session))
 admin.add_view(MyModelView(Owner, db.session))
 

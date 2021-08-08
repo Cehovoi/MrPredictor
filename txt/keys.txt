@@ -1,0 +1,11 @@
+your_size < 6
+your_size < 12 and choice_size < 12
+your_size >= 22 and choice_size >= 22 and (max(your_size, choice_size) - min(your_size, choice_size))< 7
+your_size//1.2 <= choice_size and choice_size <= your_size * 1.2
+choice_size * 1.5 <= your_size and sex == 'BOY'
+choice_size * 1.5 <= your_size and sex != 'BOY'
+your_size <= choice_size and choice_size <= your_size * 1.4 and sex =='BOY'
+your_size <= choice_size and choice_size <= your_size * 1.4 and sex !='BOY'
+your_size * 1.4 <= choice_size and sex =='BOY'
+your_size * 1.4 <= choice_size and sex !='BOY'
+1==1
