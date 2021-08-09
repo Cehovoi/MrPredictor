@@ -2,6 +2,8 @@ up:
 	docker-compose --env-file .env up -d
 up_dev:
 	docker-compose --env-file .env.dev up -d
+up_dev_lite:
+	docker-compose --env-file .env.dev.light up -d
 down:
 	docker-compose down
 

@@ -67,7 +67,7 @@ def predictor(your_size, name):
                                 sex=sex, measure=measure, choice_race=choice_race,
                                 dimension=dimension, your_size=your_size, pronoun=pronoun,
                                 choice_size=choice_size)
-    epilog = Collector.query.get(1).epilogue
+
     comment_num = comparative(your_size, choice_size, sex)
     picture = drawing(lovers, person, sex, value)#recive list of two values img and length
     exhibit = Exhibit(your_size=your_size, length=picture[1], name=name,
@@ -81,18 +81,16 @@ def predictor(your_size, name):
 
 
 def collector_string(**kwargs):
-    collector = Collector.query.get(1).prologue #hardcode id
+    collector = Collector.query.first().prologue # only one first value from Collector
     prologue = collector.format(**kwargs) #args = locals()
     return prologue
 
 
 def comparative(your_size, choice_size, sex):
     your_size, choice_size = abs(your_size), abs(choice_size)
-    counter = db.session.query(Occasion).count()
-    for id in range(1, counter + 1):
-        occasion = Occasion.query.get(id)
+    for occasion in Occasion.query.all():
         if eval(occasion.key):
-            return id
+            return occasion.id
 
 
 class Collector(db.Model):
@@ -101,7 +99,7 @@ class Collector(db.Model):
     prologue = db.Column(db.Text, nullable=False)
     epilogue = db.Column(db.Text, nullable=False)
     def __repr__(self):
-        return '<Epilogue {} >'.format(self.epilogue)
+        return '<Prologue - {}, Epilogue - {}>'.format(self.epilogue, self.epilogue)
 
 
 class Occasion(db.Model):

@@ -24,4 +24,4 @@ class TestingConfig(BaseConfig):
 class ProductionConfig(BaseConfig):
     DEBUG = False
     SQLALCHEMY_DATABASE_URI = os.environ.get('DEVELOPMENT_DATABASE_URI') or \
-                              "mysql+mysqlconnector://root:root@mysqldb/test_p"
+                              "mysql+mysqlconnector://root:root@mysqldb/predictor_base"

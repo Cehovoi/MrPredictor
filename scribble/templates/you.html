@@ -4,11 +4,19 @@ Your device
 {% endblock %}
 {% block body %}
 <div class='container mt-3'>
-	<h1 id="signboard"> Two questions: </h1>
-	<form method = 'post' >
-		<input type='text' name='name' id='title' class='form-control' placeholder = 'Your Name'><br>
-		<input type='text' name='size' id='title' class='form-control' placeholder = 'Enter the size of your genital in cm. If you are boy positivre number, if you are girl negative'><br>
-		<input type='submit' class='btn btn-success' value='Send'>
-	</form>
+	{% if not highlighter %}
+		<h1 id="signboard"> Two questions: </h1>
+		<form method = 'post' >
+			<input type='text' name='name' id='title' class='form-control' placeholder = 'Your Name'><br>
+			<input type='text' name='size' id='title' class='form-control' placeholder = 'Enter the size of your genital in cm. If you are boy positivre number, if you are girl negative'><br>
+			<input type='submit' class='btn btn-success' value='Send'>
+		</form>
+	{% else %}
+		<h1 id="signboard">AUTO FILL</h1>
+		<form method = 'post' >
+			<input type='text' name='size' id='title' class='form-control' placeholder = {{highlighter}}><br>
+			<input type='submit' class='btn btn-success' value='Send'>
+		</form>
+	{% endif %}
 </div>
 {% endblock %}

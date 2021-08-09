@@ -5,23 +5,21 @@ from .main import main
 from scribble.models import Exhibit, Owner, Collector, filler, predictor
 from scribble.validator import validator
 from itertools import zip_longest
-'''
-@main.route('/s')
-def hello_world():
-  return 'Hello PREDICTOR APP!'
-'''
-@main.route('/mysql')
-def my_db():
-  db.create_all()
-  return "Create or not?"
+from flask_login import current_user
+
 
 @main.route('/oc_fill')
 def oc_fill():
+    if not current_user.is_authenticated:
+        return redirect('/login')
     filler()
-    return 'Fill the Ocassion'
+    return 'Fill the Ocassion class'
+
 
 @main.route('/ex_fill',methods=['POST', 'GET'])
 def ex_fill():
+    if not current_user.is_authenticated:
+        return redirect('/login')
     if request.method == 'POST':
         from random import choice, randint
         from string import ascii_lowercase as low
@@ -39,22 +37,9 @@ def ex_fill():
             else: r = randint(7, 30)
             ls.append((s, r))
         for name_size in ls:
-            try:
-                id = predictor(name_size[1], name_size[0])
-            except Exception:
-                return predictor(name_size[0],name_size[1]) or 'Dont add %s exemplars in %s step' % (amount, name_size)
+            predictor(name_size[1], name_size[0])
         return redirect('/gallery')
-
-    return render_template('you.html')
-
-
-@main.route('/create_owner')
-def owner():
-    admin = Owner(username = 'Zhenya')
-    admin.set_password='123'
-    db.session.add(admin)
-    db.session.commit()
-    return 'ADD admin Zhenya'
+    return render_template('you.html', highlighter='which_the_number_of_exhibits_will_be_increased?')
 
 
 @main.context_processor
@@ -86,11 +71,10 @@ def you():
                     comment=size_and_comment[1])
         try:
             id = predictor(size_and_comment[0], name)
-
             return redirect('/answer/%s' % id)
         except Exception:
             return 'Something went wrong with db'
-    return render_template('you.html')
+    return render_template('you.html', highlighter=None)
 
 
 @main.route('/predictions')
@@ -102,7 +86,7 @@ def predictions():
 @main.route('/answer/<int:id>')
 def answer(id):
     ans = Exhibit.query.get(id)
-    epilogue = Collector.query.get(1).epilogue
+    epilogue = Collector.query.first().epilogue # only one first value from Collector
     return render_template('answer.html', ans=ans, epilogue=epilogue)
 
 
@@ -121,6 +105,7 @@ def gallery():
         smollest = predictions[0].id
     else: bigest, smollest = None, None
     return render_template('gallery.html', bigest=bigest, smollest=smollest, ans=ans)
+
 
 @main.route('/login', methods=['POST', 'GET'])
 def login():
