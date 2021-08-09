@@ -1,12 +1,9 @@
 from flask import render_template, redirect, request, url_for, current_app
 from flask_login import login_user, logout_user, current_user
-
 from scribble import db
 from .main import main
 from scribble.models import Exhibit, Owner, Collector, filler, predictor
-#from scribble.predictor import predictor
 from scribble.validator import validator
-from collections import OrderedDict
 from itertools import zip_longest
 '''
 @main.route('/s')
@@ -40,13 +37,12 @@ def ex_fill():
             if num%2 == 0:
                 r = randint(-30, -7)
             else: r = randint(7, 30)
-
             ls.append((s, r))
         for name_size in ls:
             try:
                 id = predictor(name_size[1], name_size[0])
             except Exception:
-                return predictor(name_size[0],name_size[1]) or 'Dont add %s exemplars in %s step'% (amount, name_size[0], name_size[1])
+                return predictor(name_size[0],name_size[1]) or 'Dont add %s exemplars in %s step' % (amount, name_size)
         return redirect('/gallery')
 
     return render_template('you.html')

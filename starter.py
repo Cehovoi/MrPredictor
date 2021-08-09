@@ -5,8 +5,9 @@ from scribble import create_app, db
 from scribble.models import Owner, Exhibit
 from flask.cli import FlaskGroup
 
-import click
-app = create_app(os.getenv('FLASK_ENV'))
+app = create_app()
+app.config['SECRET_KEY'] = 'mysecret'
+
 '''
 app.config['SECRET_KEY'] = 'mysecret'
 

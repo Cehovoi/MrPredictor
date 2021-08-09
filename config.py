@@ -3,7 +3,7 @@ import os
 app_dir = os.path.abspath(os.path.dirname(__file__))
 
 class BaseConfig:
-    SECRET_KEY = os.environ.get('mysecret')
+    SECRET_KEY = 'mysecret'#os.environ.get('mysecret')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 class DevelopmentConfig(BaseConfig):
@@ -23,5 +23,5 @@ class TestingConfig(BaseConfig):
 
 class ProductionConfig(BaseConfig):
     DEBUG = False
-    SQLALCHEMY_DATABASE_URI = os.environ.get('PRODUCTION_DATABASE_URI') or \
-	'sqlite:///exhibits_box.db'
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DEVELOPMENT_DATABASE_URI') or \
+                              "mysql+mysqlconnector://root:root@mysqldb/test_p"

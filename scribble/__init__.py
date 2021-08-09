@@ -15,15 +15,10 @@ login.session_protection = 'strong'
 login.login_view = 'auth.login'
 #login.login_view = 'main.login'
 folder = os.path.dirname(os.path.abspath(__file__)) + '/static'
-
-def create_app(config):
+print()
+def create_app():
     app = Flask(__name__) #, static_folder = folder)
-
-    #app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///exhibits_box_dev.db'
-    app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+mysqlconnector://root:root@mysqldb/test_p"
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-    app.config['SECRET_KEY'] = 'mysecret'
-    #app.config['DEBUG'] = True
+    app.config.from_object(os.getenv('FLASK_ENV'))
     db.init_app(app)
 
     admin.init_app(app)

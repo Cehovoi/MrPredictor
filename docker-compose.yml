@@ -11,7 +11,10 @@ services:
   volumes:
   - .:/app
   - ./scribble:/app/scribble
-
+  environment:
+   - FLASK_APP=scribble
+   - FLASK_ENV=${TAG}
+   - FLASK_DEBUG=${TAG2}
 
  mysqldb:
   image: mysql
