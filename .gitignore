@@ -2,7 +2,8 @@
 *.pyc
 # Folder view configuration files
 .DS_Store
-
 Desktop.ini
-
 .idea/
+.env
+.env.dev
+.env.dev.light

@@ -1,0 +1,6 @@
+*.swp
+*.swo
+*.pyc
+.env
+.env.dev
+.env.dev.light
