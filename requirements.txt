@@ -11,6 +11,7 @@ Flask-SQLAlchemy==2.5.1
 Flask-WTF==0.15.1
 mysql-connector-python == 8.0.25
 greenlet==1.1.0
+gunicorn==20.1.0
 image==1.5.33
 importlib-metadata==4.3.1
 iniconfig==1.1.1
