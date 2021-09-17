@@ -1,1 +1,1 @@
-web: python manage.py run --host=0.0.0.0
+web: python manage.py run --host=0.0.0.0:5000
