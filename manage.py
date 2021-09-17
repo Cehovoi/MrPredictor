@@ -1,4 +1,5 @@
 from flask.cli import FlaskGroup
+from scribble import create_app
 
 app = create_app()
 
