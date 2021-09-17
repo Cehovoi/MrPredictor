@@ -15,7 +15,7 @@ login.session_protection = 'strong'
 login.login_view = 'auth.login'
 #login.login_view = 'main.login'
 folder = os.path.dirname(os.path.abspath(__file__)) + '/static'
-print()
+
 def create_app():
     app = Flask(__name__) #, static_folder = folder)
     app.config.from_object(os.getenv('FLASK_ENV'))
