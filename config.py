@@ -22,9 +22,7 @@ class TestingConfig(BaseConfig):
 
 class ProductionConfigPostgres(BaseConfig):
     DEBUG = False
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DEVELOPMENT_DATABASE_URI')
-    if SQLALCHEMY_DATABASE_URI.startswith('postgres://'):
-        SQLALCHEMY_DATABASE_URI = SQLALCHEMY_DATABASE_URI.replace('postgres://', 'postgresql://', 1)
+    SQLALCHEMY_DATABASE_URI = 'postgresql://splmwtmlfpydec:08c251c0332480445243a388f76f46b2cfd787b4116aa4e5750b0718f6a3fdca@ec2-54-74-60-70.eu-west-1.compute.amazonaws.com:5432/dbvaoqla3vesf9'
 
 
 class ProductionConfig(BaseConfig):
