@@ -8,19 +8,6 @@ from itertools import zip_longest
 from flask_login import current_user
 
 
-@main.route('/create_db')
-def my_db():
-  db.create_all()
-  return "Create or not?"
-
-@main.route('/create_owner')
-def owner():
-    admin = Owner(username = 'Zhenya')
-    admin.set_password='zhenya_secret_PASS'
-    db.session.add(admin)
-    db.session.commit()
-    return 'ADD admin'
-
 @main.route('/oc_fill')
 def oc_fill():
     if not current_user.is_authenticated:
